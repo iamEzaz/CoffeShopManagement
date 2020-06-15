@@ -1,0 +1,113 @@
+1 create table shop_and_customers(shop_id number(7) primary key, customer_id number(7) REFERENCES customer);
+
+insert into shop_and_customers values(1, 1);
+
+insert into shop_and_customers values(2, 2);
+
+insert into shop_and_customers values(3, 3);
+
+
+2 create table address(building_no number(7) primary key, road_no number(7), area varchar2(10));
+
+insert into address values(28, 1, 'Uttara');
+
+3 create table customer(customer_id number(7) primary key, city varchar2(10), customer_name varchar2(10));
+
+insert into customer values(1, 'Dhaka', 'RUSHEE');
+
+insert into customer values(2, 'Dhaka', 'DEV ROY');
+
+insert into customer values(3, 'Dhaka', 'ROBIN');
+
+4 create table shop_phoneno( shop_id number(7) REFERENCES shop_and_customers, phone_number number(11) not null); 
+
+insert into shop_phoneno values(1, 01785210344);
+
+insert into shop_phoneno values(2, 01785210344);
+
+insert into shop_phoneno values(3, 01785210344);
+
+
+5 create table customers_phoneno( customer_id number(7) REFERENCES customer, phone_number number(11));
+
+insert into customers_phoneno values(1, 01785210345);
+
+insert into customers_phoneno values(2, 01785210346);
+
+insert into customers_phoneno values(3, 01785210346);
+
+6 create table orders( customer_id number(7) REFERENCES customer, city varchar2(10), customer_name varchar2(10), phone_number number(11), order_id number(7) primary key); 
+
+insert into orders values(1, 'Dhaka', 'RUSHEE' , 01785210345, 1);
+
+insert into orders values(2, 'Dhaka', 'DEV' , 01785210346, 2);
+
+insert into orders values(3, 'Dhaka', 'ROBIN' , 01785210345, 3);
+
+7 create table ordered_item( delivered_by varchar2(10), quantity number(7), item_name varchar2(20), order_id REFERENCES orders, item_id number(7) primary key, price number(7)); 
+
+insert into ordered_item values('EZAZ', 1, 'cold coffee' , 1, 1, 70);
+
+insert into ordered_item values('Tamim', 1, 'Black coffee' , 1, 2, 50);
+
+insert into ordered_item values('EZAZ', 2, 'creamy iced coffee' , 2, 3, 150);
+
+8 create table produced_by(produced_by varchar2(10), price number(7), item_id REFERENCES ordered_item, item_name varchar2(20)); 
+
+insert into produced_by values('ASIF', 70, 1 , 'cold coffee');
+
+insert into produced_by values('ASIF', 50, 2 , 'Black coffee');
+
+insert into produced_by values('ASIF', 150, 3 , 'creamy iced coffee');
+
+9 create table delivered_by( delivered_by varchar2(10), quantity number(7) , item_name varchar2(20), order_id REFERENCES orders, item_id REFERENCES ordered_item, price number(7), employee_id REFERENCES employee); 
+
+insert into delivered_by values('EZAZ', 1, 'cold coffee', 1, 1, 70, 4);
+
+insert into delivered_by values('ASIF', 1, 'Black coffee', 2, 2, 50, 5);
+
+insert into delivered_by values('ASIF', 2,'creamy iced coffee', 3, 3, 150, 4);
+
+10 create table employee( employee_name varchar2(10), job varchar2(10), city varchar2(10), employee_id number(7) primary key, salary number(7)); 
+
+insert into employee values('PRANTO', 'Manager', 'RANGPUR', 1, 30000);
+
+insert into employee values('HABIB', 'Cashier', 'Dhaka', 2, 20000);
+
+insert into employee values('ASIF', 'waiter', 'Dhaka', 3, 20000);
+
+insert into employee values('EZAZ', 'waiter', 'Dhaka', 4, 10000);
+
+insert into employee values('TAMIM', 'waiter', 'Dhaka', 5, 10000);
+
+11 create table employee_bill( employee_name varchar2(10), job varchar2(10), city varchar2(10), employee_id number(7) REFERENCES employee, salary number(7), bill_id REFERENCES bill); 
+
+insert into employee_bill values('EZAZ', 'waiter', 'Dhaka', 5, 10000, 1);
+
+insert into employee_bill values('TAMIM', 'waiter', 'Dhaka', 5, 10000, 2);
+
+insert into employee_bill values('EZAZ', 'waiter', 'Dhaka', 5, 10000, 3);
+
+12 create table bill( total number(7), bill_id number(7) primary key, description varchar2(10)); 
+
+insert into bill values(70, 1, NULL);
+
+insert into bill values(50, 2, NULL);
+
+insert into bill values(150, 3, NULL);
+
+13 create table bill_customer( total number(7), bill_id number(7) REFERENCES bill, description varchar2(10), customer_id number(7) REFERENCES customer);
+
+insert into bill_customer values(70, 1, NULL, 1);
+
+insert into bill_customer values(50, 1, NULL, 2);
+
+insert into bill_customer values(150, 1, NULL, 3);
+
+14 create table shop_employee( shop_id REFERENCES shop_and_customers, employee_id REFERENCES employee);
+
+insert into shop_employee values(1, 4);
+
+insert into shop_employee values(2, 5);
+
+insert into shop_employee values(3, 4);
