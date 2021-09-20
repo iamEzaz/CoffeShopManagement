@@ -1,2 +1,1 @@
-# EZAZ_DATABASE_PROJECT
-This project is about COFFEE SHOP MANAGEMENT SYSTEM.
+Use it well 😌
